@@ -22,12 +22,12 @@ import random
 class WordList:
 
     def __init__(self):
-        self.word_list = []
-        with open("sowpods.txt", "r") as word_list_source_file:
-            for line in self.word_list:
-                self.word_list.append(line)
+        self.word_array = []
+        with open("sowpods.txt", "r") as self.word_list_source_file:
+            for line in self.word_list_source_file:
+                self.word_array.append(line)
         # print(len(word_list))
-        print(type(self.word_list))
+        print(type(self.word_array))
 
     def __str__(self):
         # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
@@ -35,12 +35,13 @@ class WordList:
 
 class RandomWord:
 
-    def __init__(self,word_list):
-        self.random_word = random.choice(self.word_list)
-        print(f"The random word is {self.random_word}")
+    def __init__(self):
+        self.random_word = ""
 
-    def create_word(self,word_list):
-        pass
+
+    def create_word(self,word_array_choice):
+        self.random_word = random.choice(word_array_choice)
+        print(f"The random word is {self.random_word}")
 
     def __str__(self):
         # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
@@ -49,11 +50,10 @@ class RandomWord:
 class GamePlay:
 
     def __init__(self):
-        self.word_list = WordList()
-        # print(len(self.word_list))
-        # self.random_word = RandomWord(self.word_list)
-        word = RandomWord(self.word_list)
-        word.create_word(self.word_list)
+        self.word_array = WordList()
+        self.word_array_to_choose_from = self.word_array
+        self.word = RandomWord()
+        self.word.create_word(self.word_array_to_choose_from)
 
     def game_play(self):
         pass
@@ -63,5 +63,6 @@ class GamePlay:
         pass
 
 if __name__ == '__main__':
+
     play_hangman = GamePlay()
     play_hangman.game_play()
