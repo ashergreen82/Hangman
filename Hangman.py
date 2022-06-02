@@ -19,7 +19,7 @@ function.
 
 import random
 
-class WordList:
+class WordListHandler:
 
     def __init__(self):
         self.word_array = []
@@ -29,19 +29,10 @@ class WordList:
         # print(len(word_list))
         print(type(self.word_array))
 
-    def __str__(self):
-        # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
-        pass
-
-class RandomWord:
-
-    def __init__(self):
-        self.random_word = ""
-
-
-    def create_word(self,word_array_choice):
-        self.random_word = random.choice(word_array_choice)
+    def getRandomWord(self):
+        self.random_word = random.choice(self.word_array)
         print(f"The random word is {self.random_word}")
+        return self.random_word
 
     def __str__(self):
         # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
@@ -50,10 +41,9 @@ class RandomWord:
 class GamePlay:
 
     def __init__(self):
-        self.word_array = WordList()
-        self.word_array_to_choose_from = self.word_array
-        self.word = RandomWord()
-        self.word.create_word(self.word_array_to_choose_from)
+        self.random_word = WordListHandler()
+        self.random_word.getRandomWord()
+        print(self.random_word)
 
     def game_play(self):
         pass
