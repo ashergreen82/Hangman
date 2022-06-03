@@ -61,7 +61,7 @@ class GamePlay:
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
                 game_on = False
             else:
-                print (f"You have made {guess_counter}(s) so far.")
+                print (f"You have made {guess_counter} guess(es) so far.")
                 player_guess = input("Please enter your guess: ")
                 if player_guess.upper() in self.random_word.random_word:
                     print("Correct")
