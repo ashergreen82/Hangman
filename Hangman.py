@@ -13,9 +13,17 @@ So what the above code does is take each line and using the enumrate function I 
 and then write to the file, effectively giving me a list of words and their corresponding words.  Using the "with"
 operator allows me to open and automatically close the file without having to worry about remembering to use the close()
 function.
-'''
 
-#Step one is to open the file that contains a list of over 200000 words.
+Requirements:
+    Only let the user guess 6 times (head, body, 2 legs, and 2 arms), and tell the user how many guesses they have left.
+    Keep track of the letters the user guessed. If the user guesses a letter they already guessed, don’t penalize them - let them guess again.
+
+Optional additions:
+
+    When the player wins or loses, let them start a new game.
+    Rather than telling the user "You have 4 incorrect guesses left", display some picture art for the Hangman. This is challenging - do the other parts of the exercise first!
+
+'''
 
 import random
 
@@ -31,12 +39,10 @@ class WordListHandler:
 
     def getRandomWord(self):
         self.random_word = random.choice(self.word_array)
-        print(f"The random word is {self.random_word}")
         return self.random_word
 
     def __str__(self):
-        # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
-        pass
+        return f'The word is {self.random_word}'
 
 class GamePlay:
 
@@ -46,7 +52,24 @@ class GamePlay:
         print(self.random_word)
 
     def game_play(self):
-        pass
+        body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
+        game_on = True
+        guess_counter = 0
+        number_of_guesses_wrong = 0
+        while game_on:
+            if number_of_guesses_wrong == 6:
+                print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
+                game_on = False
+            else:
+                print (f"You have made {guess_counter}(s) so far.")
+                player_guess = input("Please enter your guess: ")
+                if player_guess.upper() in self.random_word.random_word:
+                    print("Correct")
+                    guess_counter += 1
+                else:
+                    number_of_guesses_wrong += 1
+                    print (f"Kiss your {body_parts[number_of_guesses_wrong]} goodbye")
+                    guess_counter += 1
 
     def __str__(self):
         # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
