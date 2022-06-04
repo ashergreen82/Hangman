@@ -56,20 +56,24 @@ class GamePlay:
         game_on = True
         guess_counter = 0
         number_of_guesses_wrong = 0
+        guess_log = []
         while game_on:
             if number_of_guesses_wrong == 6:
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
                 game_on = False
             else:
                 print (f"You have made {guess_counter} guess(es) so far.")
+                print(f"These are the letters you have already guessed: {guess_log}.")
                 player_guess = input("Please enter your guess: ")
                 if player_guess.upper() in self.random_word.random_word:
                     print("Correct")
                     guess_counter += 1
+                    guess_log.append(player_guess.upper())
                 else:
                     number_of_guesses_wrong += 1
                     print (f"Kiss your {body_parts[number_of_guesses_wrong]} goodbye")
                     guess_counter += 1
+                    guess_log.append(player_guess.upper())
 
     def __str__(self):
         # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
