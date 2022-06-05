@@ -51,17 +51,29 @@ class GamePlay:
         self.random_word.getRandomWord()
         print(self.random_word)
 
+    def show_word_progress(self,guess_log_correct_responses):
+        for i in range(len(self.random_word.random_word)):
+            for j in guess_log_correct_responses:
+                if j in self.random_word:
+                    print(guess_log_correct_responses[i])
+                else:
+                    print("_____"+" ")
+
     def game_play(self):
-        body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
+        # body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
+        body_parts = ["Head", "Body", "Left Arm", "Right Arm", "Left Leg", "Right Leg"]
         game_on = True
         guess_counter = 0
         number_of_guesses_wrong = 0
+        number_of_guesses_right = 0
         guess_log = []
+        guess_log_correct_responses = []
         while game_on:
             if number_of_guesses_wrong == 6:
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
                 game_on = False
             else:
+                self.show_word_progress(guess_log_correct_responses)
                 print (f"You have made {guess_counter} guess(es) so far.")
                 print(f"These are the letters you have already guessed: {guess_log}.")
                 player_guess = input("Please enter your guess: ")
@@ -69,9 +81,11 @@ class GamePlay:
                     print("Correct")
                     guess_counter += 1
                     guess_log.append(player_guess.upper())
+                    guess_log_correct_responses.append(player_guess.upper())
+                    number_of_guesses_right += 1
                 else:
-                    number_of_guesses_wrong += 1
                     print (f"Kiss your {body_parts[number_of_guesses_wrong]} goodbye")
+                    number_of_guesses_wrong += 1
                     guess_counter += 1
                     guess_log.append(player_guess.upper())
 
