@@ -54,7 +54,7 @@ class GamePlay:
     def show_word_progress(self,guess_log_correct_responses):
         for i in range(len(self.random_word.random_word)):
             for j in guess_log_correct_responses:
-                if j in self.random_word:
+                if j in self.random_word.random_word:
                     print(guess_log_correct_responses[i])
                 else:
                     print("_____"+" ")
