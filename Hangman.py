@@ -39,6 +39,10 @@ class WordListHandler:
 
     def getRandomWord(self):
         self.random_word = random.choice(self.word_array)
+        length_of_word = len(self.random_word) - 1
+        for i in range(length_of_word):
+            print("___" + " ", end="  ")
+
         return self.random_word
 
     def __str__(self):
@@ -52,12 +56,23 @@ class GamePlay:
         print(self.random_word)
 
     def show_word_progress(self,guess_log_correct_responses):
-        for i in range(len(self.random_word.random_word)):
-            for j in guess_log_correct_responses:
-                if j in self.random_word.random_word:
-                    print(guess_log_correct_responses[i])
-                else:
-                    print("_____"+" ")
+        word_counter = 0
+        length_of_word = len(self.random_word.random_word) - 1
+        for i in range(length_of_word):
+            if self.random_word.random_word[i] in guess_log_correct_responses:
+                print(self.random_word.random_word[i], end="  ")
+                word_counter += 1
+            else:
+                print("___" + " ", end=" ")
+        if word_counter == length_of_word:
+            return True
+
+    def check_to_see_if_player_has_won(self,guess_log_correct_responses):
+        word_counter = 0
+        length_of_word = len(self.random_word.random_word) - 1
+        for i in range(length_of_word):
+            if self.random_word.random_word[i] in guess_log_correct_responses:
+                word_counter += 1
 
     def game_play(self):
         # body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
@@ -73,8 +88,12 @@ class GamePlay:
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
                 game_on = False
             else:
-                self.show_word_progress(guess_log_correct_responses)
-                print (f"You have made {guess_counter} guess(es) so far.")
+                has_the_player_won = self.show_word_progress(guess_log_correct_responses)
+                if has_the_player_won is True:
+                    print(f"\n\nCongratulations!  You have won the game with {guess_counter} guesses!")
+                    game_on = False
+                    continue
+                print (f"\n\nYou have made {guess_counter} guess(es) so far.")
                 print(f"These are the letters you have already guessed: {guess_log}.")
                 player_guess = input("Please enter your guess: ")
                 if player_guess.upper() in self.random_word.random_word:
