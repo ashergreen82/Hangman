@@ -35,7 +35,7 @@ class WordListHandler:
             for line in self.word_list_source_file:
                 self.word_array.append(line)
         # print(len(word_list))
-        print(type(self.word_array))
+        # print(type(self.word_array))
 
     def getRandomWord(self):
         self.random_word = random.choice(self.word_array)
@@ -53,7 +53,7 @@ class GamePlay:
     def __init__(self):
         self.random_word = WordListHandler()
         self.random_word.getRandomWord()
-        print(self.random_word)
+        # print(self.random_word)
 
     def show_word_progress(self,guess_log_correct_responses):
         word_counter = 0
@@ -192,7 +192,7 @@ class GamePlay:
                         guess_counter += 1
                         guess_log.append(player_guess.upper())
                     except IndexError:
-                        print(f"Well, you gave it yoru best shot!")
+                        print(f"Well, you gave it your best shot!")
                         number_of_guesses_wrong += 1
                         guess_counter += 1
                         guess_log.append(player_guess.upper())
