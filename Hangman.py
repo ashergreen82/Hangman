@@ -74,6 +74,89 @@ class GamePlay:
             if self.random_word.random_word[i] in guess_log_correct_responses:
                 word_counter += 1
 
+    def display_noose(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |')
+        print('  |')
+        print('  |')
+        print('  |')
+        print('  |')
+        print("------------")
+
+    def display_head(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |      O')
+        print('  |')
+        print('  |')
+        print('  |')
+        print('  |')
+        print("------------")
+
+    def display_body(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |      O')
+        print('  |      |')
+        print('  |      |')
+        print('  |')
+        print('  |')
+        print("------------")
+
+    def display_left_hand(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |      O')
+        print('  |      |')
+        print('  |     /|')
+        print('  |')
+        print('  |')
+        print("------------")
+
+    def display_right_hand(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |      O')
+        print('  |      |')
+        print('  |     /|\\')
+        print('  |')
+        print('  |')
+        print("------------")
+
+    def display_left_leg(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |      O')
+        print('  |      |')
+        print('  |     /|\\')
+        print('  |      |')
+        print('  |      |')
+        print('  |     /|')
+        print('  |    / |')
+        print('  |')
+        print("------------")
+
+    def display_right_leg(self):
+        print('\n')
+        print("   ------")
+        print("  |      |")
+        print('  |      O')
+        print('  |      |')
+        print('  |     /|\\')
+        print('  |      |')
+        print('  |      |')
+        print('  |     /|\\')
+        print('  |    / | \\')
+        print('  |')
+        print("------------")
+
     def game_play(self):
         # body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
         body_parts = ["Head", "Body", "Left Arm", "Right Arm", "Left Leg", "Right Leg"]
@@ -84,7 +167,7 @@ class GamePlay:
         guess_log = []
         guess_log_correct_responses = []
         while game_on:
-            if number_of_guesses_wrong == 6:
+            if number_of_guesses_wrong == len(body_parts) + 1:
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
                 game_on = False
             else:
@@ -103,10 +186,30 @@ class GamePlay:
                     guess_log_correct_responses.append(player_guess.upper())
                     number_of_guesses_right += 1
                 else:
-                    print (f"Kiss your {body_parts[number_of_guesses_wrong]} goodbye")
-                    number_of_guesses_wrong += 1
-                    guess_counter += 1
-                    guess_log.append(player_guess.upper())
+                    try:
+                        print (f"Kiss your {body_parts[number_of_guesses_wrong]} goodbye")
+                        number_of_guesses_wrong += 1
+                        guess_counter += 1
+                        guess_log.append(player_guess.upper())
+                    except IndexError:
+                        print(f"Well, you gave it yoru best shot!")
+                        number_of_guesses_wrong += 1
+                        guess_counter += 1
+                        guess_log.append(player_guess.upper())
+                if number_of_guesses_wrong == 0:
+                    self.display_noose()
+                elif number_of_guesses_wrong == 1:
+                    self.display_head()
+                elif number_of_guesses_wrong == 2:
+                    self.display_body()
+                elif number_of_guesses_wrong == 3:
+                    self.display_left_hand()
+                elif number_of_guesses_wrong == 4:
+                    self.display_right_hand()
+                elif number_of_guesses_wrong == 5:
+                    self.display_left_leg()
+                elif number_of_guesses_wrong == 6:
+                    self.display_right_leg()
 
     def __str__(self):
         # return f'player {self.name} has %s' % [str(x) for x in self.player_hand]
