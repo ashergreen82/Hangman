@@ -26,6 +26,7 @@ Optional additions:
 '''
 
 import random
+from os import system, name
 
 class WordListHandler:
 
@@ -33,15 +34,15 @@ class WordListHandler:
         self.word_array = []
         with open("sowpods.txt", "r") as self.word_list_source_file:
             for line in self.word_list_source_file:
-                self.word_array.append(line)
+                self.word_array.append(line.rstrip())
         # print(len(word_list))
         # print(type(self.word_array))
 
     def getRandomWord(self):
         self.random_word = random.choice(self.word_array)
-        length_of_word = len(self.random_word) - 1
-        for i in range(length_of_word):
-            print("___" + " ", end="  ")
+        # length_of_word = len(self.random_word) - 1
+        # for i in range(length_of_word):
+        #     print("___" + " ", end="  ")
 
         return self.random_word
 
@@ -53,11 +54,20 @@ class GamePlay:
     def __init__(self):
         self.random_word = WordListHandler()
         self.random_word.getRandomWord()
+        self.clear()
         # print(self.random_word)
 
+    def clear(self):
+        # for windows
+        if name == 'nt':
+            _ = system('cls')
+
+        # for mac and linux(here, os.name is 'posix')
+        else:
+            _ = system('clear')
     def show_word_progress(self,guess_log_correct_responses):
         word_counter = 0
-        length_of_word = len(self.random_word.random_word) - 1
+        length_of_word = len(self.random_word.random_word)
         for i in range(length_of_word):
             if self.random_word.random_word[i] in guess_log_correct_responses:
                 print(self.random_word.random_word[i], end="  ")
@@ -69,7 +79,7 @@ class GamePlay:
 
     def check_to_see_if_player_has_won(self,guess_log_correct_responses):
         word_counter = 0
-        length_of_word = len(self.random_word.random_word) - 1
+        length_of_word = len(self.random_word.random_word)
         for i in range(length_of_word):
             if self.random_word.random_word[i] in guess_log_correct_responses:
                 word_counter += 1
@@ -157,6 +167,14 @@ class GamePlay:
         print('  |')
         print("------------")
 
+    def end_of_game(self,game_on):
+        player_decision = input("Would you like to play another round [type \"NO\" to end, or any key to continue]? ")
+        if player_decision.upper() == "NO":
+            game_on = False
+        else:
+            game_on = True
+        return game_on
+
     def game_play(self):
         # body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
         body_parts = ["Head", "Body", "Left Arm", "Right Arm", "Left Leg", "Right Leg"]
@@ -167,20 +185,23 @@ class GamePlay:
         guess_log = []
         guess_log_correct_responses = []
         while game_on:
+            if guess_counter == 0:
+                self.display_noose()
             if number_of_guesses_wrong == len(body_parts) + 1:
+                self.display_right_leg()
+                print(f"Well, you gave it your best shot!")
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
-                game_on = False
+                game_on = self.end_of_game(game_on)
             else:
                 has_the_player_won = self.show_word_progress(guess_log_correct_responses)
                 if has_the_player_won is True:
-                    print(f"\n\nCongratulations!  You have won the game with {guess_counter} guesses!")
-                    game_on = False
+                    print(f"\n\nCongratulations!  You have won the game with {guess_counter} guesses!\n")
+                    game_on = self.end_of_game(game_on)
                     continue
                 print (f"\n\nYou have made {guess_counter} guess(es) so far.")
                 print(f"These are the letters you have already guessed: {guess_log}.")
                 player_guess = input("Please enter your guess: ")
                 if player_guess.upper() in self.random_word.random_word:
-                    print("Correct")
                     guess_counter += 1
                     guess_log.append(player_guess.upper())
                     guess_log_correct_responses.append(player_guess.upper())
@@ -192,10 +213,10 @@ class GamePlay:
                         guess_counter += 1
                         guess_log.append(player_guess.upper())
                     except IndexError:
-                        print(f"Well, you gave it your best shot!")
                         number_of_guesses_wrong += 1
                         guess_counter += 1
                         guess_log.append(player_guess.upper())
+                self.clear()
                 if number_of_guesses_wrong == 0:
                     self.display_noose()
                 elif number_of_guesses_wrong == 1:
