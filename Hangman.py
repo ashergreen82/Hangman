@@ -40,10 +40,6 @@ class WordListHandler:
 
     def getRandomWord(self):
         self.random_word = random.choice(self.word_array)
-        # length_of_word = len(self.random_word) - 1
-        # for i in range(length_of_word):
-        #     print("___" + " ", end="  ")
-
         return self.random_word
 
     def __str__(self):
@@ -167,16 +163,16 @@ class GamePlay:
         print('  |')
         print("------------")
 
-    def end_of_game(self,game_on):
+    def end_of_game(self):
         player_decision = input("Would you like to play another round [type \"NO\" to end, or any key to continue]? ")
+        game_on = True
         if player_decision.upper() == "NO":
             game_on = False
-        else:
+        elif player_decision.upper() == "NO":
             game_on = True
         return game_on
 
     def game_play(self):
-        # body_parts = {1:"Head",2:"Body",3:"Left Arm",4:"Right Arm",5:"Left Leg",6:"Right Leg"}
         body_parts = ["Head", "Body", "Left Arm", "Right Arm", "Left Leg", "Right Leg"]
         game_on = True
         guess_counter = 0
@@ -191,12 +187,28 @@ class GamePlay:
                 self.display_right_leg()
                 print(f"Well, you gave it your best shot!")
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
-                game_on = self.end_of_game(game_on)
+                game_on = self.end_of_game()
+                if game_on:
+                    guess_counter = 0
+                    number_of_guesses_wrong = 0
+                    number_of_guesses_right = 0
+                    guess_log = []
+                    guess_log_correct_responses = []
+                    self.random_word.getRandomWord()
+                    self.clear()
             else:
                 has_the_player_won = self.show_word_progress(guess_log_correct_responses)
                 if has_the_player_won is True:
                     print(f"\n\nCongratulations!  You have won the game with {guess_counter} guesses!\n")
-                    game_on = self.end_of_game(game_on)
+                    game_on = self.end_of_game()
+                    if game_on:
+                        guess_counter = 0
+                        number_of_guesses_wrong = 0
+                        number_of_guesses_right = 0
+                        guess_log = []
+                        guess_log_correct_responses = []
+                        self.random_word.getRandomWord()
+                        self.clear()
                     continue
                 print (f"\n\nYou have made {guess_counter} guess(es) so far.")
                 print(f"These are the letters you have already guessed: {guess_log}.")
