@@ -49,8 +49,6 @@ class GamePlay:
 
     def __init__(self):
         self.random_word = WordListHandler()
-        self.random_word.getRandomWord()
-        self.clear()
         # print(self.random_word)
 
     def clear(self):
@@ -119,7 +117,7 @@ class GamePlay:
         print("  |      |")
         print('  |      O')
         print('  |      |')
-        print('  |     /|')
+        print('  |     / ')
         print('  |')
         print('  |')
         print("------------")
@@ -130,7 +128,7 @@ class GamePlay:
         print("  |      |")
         print('  |      O')
         print('  |      |')
-        print('  |     /|\\')
+        print('  |     / \\')
         print('  |')
         print('  |')
         print("------------")
@@ -144,8 +142,8 @@ class GamePlay:
         print('  |     /|\\')
         print('  |      |')
         print('  |      |')
-        print('  |     /|')
-        print('  |    / |')
+        print('  |     / ')
+        print('  |    /  ')
         print('  |')
         print("------------")
 
@@ -158,8 +156,8 @@ class GamePlay:
         print('  |     /|\\')
         print('  |      |')
         print('  |      |')
-        print('  |     /|\\')
-        print('  |    / | \\')
+        print('  |     / \\')
+        print('  |    /   \\')
         print('  |')
         print("------------")
 
@@ -168,11 +166,11 @@ class GamePlay:
         game_on = True
         if player_decision.upper() == "NO":
             game_on = False
-        elif player_decision.upper() == "NO":
-            game_on = True
         return game_on
 
     def game_play(self):
+        self.clear()
+        self.random_word.getRandomWord()
         body_parts = ["Head", "Body", "Left Arm", "Right Arm", "Left Leg", "Right Leg"]
         game_on = True
         guess_counter = 0
@@ -187,28 +185,13 @@ class GamePlay:
                 self.display_right_leg()
                 print(f"Well, you gave it your best shot!")
                 print(f"The word was {self.random_word.random_word}.\nSorry, you lost the game.")
-                game_on = self.end_of_game()
-                if game_on:
-                    guess_counter = 0
-                    number_of_guesses_wrong = 0
-                    number_of_guesses_right = 0
-                    guess_log = []
-                    guess_log_correct_responses = []
-                    self.random_word.getRandomWord()
-                    self.clear()
+                game_on = False #END OF GAME IS HERE
+                continue
             else:
                 has_the_player_won = self.show_word_progress(guess_log_correct_responses)
                 if has_the_player_won is True:
                     print(f"\n\nCongratulations!  You have won the game with {guess_counter} guesses!\n")
-                    game_on = self.end_of_game()
-                    if game_on:
-                        guess_counter = 0
-                        number_of_guesses_wrong = 0
-                        number_of_guesses_right = 0
-                        guess_log = []
-                        guess_log_correct_responses = []
-                        self.random_word.getRandomWord()
-                        self.clear()
+                    game_on = False #END OF GAME IS HERE
                     continue
                 print (f"\n\nYou have made {guess_counter} guess(es) so far.")
                 print(f"These are the letters you have already guessed: {guess_log}.")
@@ -251,4 +234,9 @@ class GamePlay:
 if __name__ == '__main__':
 
     play_hangman = GamePlay()
-    play_hangman.game_play()
+    game_executing = True
+    while game_executing:
+        play_hangman.game_play()
+        will_player_continue_to_play = play_hangman.end_of_game()
+        if not will_player_continue_to_play:
+            game_executing = False
