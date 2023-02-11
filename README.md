@@ -2,7 +2,7 @@
 
 *Play this classic Hangman game written in Python*
 
-You can run the program from [here](https://replit.com/@AsherGreen/Hangman).
+You can run the program from [here](https://replit.com/@AsherGreen/Hangman?v=1).
 <br /><br />
 
 ![screenshot](/screenshot.png/)
